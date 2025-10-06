@@ -1,12 +1,12 @@
-name: Run Modbus Automation
+name: Run Modbus Automation (Robot Framework)
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 * * * *"   # every hour
+    - cron: "0 * * * *"   # Every hour
 
 jobs:
-  run-modbus:
+  run-modbus-robot:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,19 +19,70 @@ jobs:
           python-version: "3.10"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Run Modbus orchestrator
-        run: python run_modbus.py
-
-      - name: Show logs
         run: |
-          echo "Listing logs directory:"
-          ls -R logs || echo "⚠️ No logs created!"
+          pip install -r requirements.txt
+          pip install robotframework
 
-      - name: Upload Modbus log artifacts
+      - name: Run Robot Framework tests
+        run: |
+          mkdir -p logs
+          robot -d logs tests/modbus_automation.robot
+
+      - name: List generated Robot Framework reports
+        run: |
+          echo "Generated files:"
+          ls -lh logs/
+
+      - name: Upload Robot Framework HTML reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: modbus-logs
+          name: modbus-robot-html-reports
           path: logs/
+
+
+
+
+
+
+
+
+#/*
+#name: Run Modbus Automation
+#
+#on:
+#  workflow_dispatch:
+#  schedule:
+#    - cron: "0 * * * *"   # every hour
+#
+#jobs:
+#  run-modbus:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Python
+#        uses: actions/setup-python@v5
+#        with:
+#          python-version: "3.10"
+#
+#      - name: Install dependencies
+#        run: pip install -r requirements.txt
+#
+#      - name: Run Modbus orchestrator
+#        run: python run_modbus.py
+#
+#      - name: Show logs
+#        run: |
+#          echo "Listing logs directory:"
+#          ls -R logs || echo "⚠️ No logs created!"
+#
+#      - name: Upload Modbus log artifacts
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: modbus-logs
+#          path: logs/
+#*/

@@ -1,43 +1,63 @@
 #!/usr/bin/env python3
 """
-✅ Modbus TCP Client
-Reads and writes all Modbus data types from the local server.
-Compatible with Python 3.10+ and pymodbus 3.6.8
+✅ Modbus TCP Client (pymodbus 3.x)
+Connects to localhost:5020 and interacts with the Modbus server.
+Reads coils, holding registers, and input registers.
 """
 
 from pymodbus.client import ModbusTcpClient
 
 HOST = "127.0.0.1"
 PORT = 5020
-UNIT_ID = 0  # can be 0 or 1 — both accepted by the server
 
-client = ModbusTcpClient(HOST, port=PORT)
+def run_modbus_client():
+    client = ModbusTcpClient(HOST, port=PORT)
 
-if client.connect():
-    print(f"✅ Connected to Modbus server at {HOST}:{PORT} (Unit ID: {UNIT_ID})\n")
+    if not client.connect():
+        print("❌ Could not connect to Modbus server.")
+        return
+
+    print(f"✅ Connected to Modbus server at {HOST}:{PORT}\n")
 
     # --- Read Coils ---
     print("📡 Reading Coils (0–9)...")
-    coils = client.read_coils(0, 10, unit=UNIT_ID)
+    coils = client.read_coils(0, 10)
     if coils.isError():
-        print(f"❌ Error reading coils: {coils}")
+        print(f"❌ Coil read failed: {coils}")
     else:
-        for i, bit in enumerate(coils.bits[:10]):
-            print(f"   Coil[{i}] = {'ON' if bit else 'OFF'}")
+        print("✅ Coils:", coils.bits[:10])
 
     # --- Write Coils ---
     print("\n✏️ Writing Coil 0 -> OFF, Coil 1 -> ON")
-    client.write_coil(0, False, unit=UNIT_ID)
-    client.write_coil(1, True, unit=UNIT_ID)
+    client.write_coil(0, False)
+    client.write_coil(1, True)
 
-    # --- Verify Coils ---
-    print("\n🔄 Reading Updated Coils (0–9)...")
-    coils_updated = client.read_coils(0, 10, unit=UNIT_ID)
-    if coils_updated.isError():
-        print(f"❌ Error reading coils: {coils_updated}")
+    # --- Verify Coil Writes ---
+    updated_coils = client.read_coils(0, 10)
+    if updated_coils.isError():
+        print(f"❌ Coil verify failed: {updated_coils}")
     else:
-        for i, bit in enumerate(coils_updated.bits[:10]):
-            print(f"   Coil[{i}] = {'ON' if bit else 'OFF'}")
+        print("✅ Updated Coils:", updated_coils.bits[:10])
 
-    # --- Holding Registers ---
+    # --- Read Holding Registers ---
     print("\n📗 Reading Holding Registers (0–9)...")
+    hr = client.read_holding_registers(0, 10)
+    if hr.isError():
+        print(f"❌ HR read failed: {hr}")
+    else:
+        print("✅ Holding Registers:", hr.registers)
+
+    # --- Read Input Registers ---
+    print("\n📙 Reading Input Registers (0–9)...")
+    ir = client.read_input_registers(0, 10)
+    if ir.isError():
+        print(f"❌ IR read failed: {ir}")
+    else:
+        print("✅ Input Registers:", ir.registers)
+
+    client.close()
+    print("\n🔌 Disconnected from Modbus server.")
+
+
+if __name__ == "__main__":
+    run_modbus_client()

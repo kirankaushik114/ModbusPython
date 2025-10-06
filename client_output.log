@@ -1,0 +1,15 @@
+✅ Connected to Modbus server at 127.0.0.1:5020
+
+📡 Reading Coils (0–9)...
+✅ Coils: [True, True, True, True, True, True, True, True, True, True]
+
+✏️ Writing Coil 0 -> OFF, Coil 1 -> ON
+✅ Updated Coils: [False, True, True, True, True, True, True, True, True, True]
+
+📗 Reading Holding Registers (0–9)...
+✅ Holding Registers: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
+📙 Reading Input Registers (0–9)...
+✅ Input Registers: [5, 15, 25, 35, 45, 55, 65, 75, 85, 95]
+
+🔌 Disconnected from Modbus server.

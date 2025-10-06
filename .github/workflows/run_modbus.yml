@@ -1,9 +1,9 @@
 name: Run Modbus Automation
 
 on:
-  workflow_dispatch:      # Manual run
+  workflow_dispatch:
   schedule:
-    - cron: "0 * * * *"   # Hourly
+    - cron: "0 * * * *"
 
 jobs:
   run-modbus:
@@ -19,15 +19,15 @@ jobs:
           python-version: "3.10"
 
       - name: Install dependencies
-        run: pip install pymodbus==3.6.8
+        run: pip install -r requirements.txt
 
-      - name: Run Modbus Orchestrator
+      - name: Run Modbus orchestrator
         run: python run_modbus.py
 
-      - name: Debug log folder
+      - name: Verify logs
         run: |
-          echo "Listing generated log directories:"
-          ls -R logs || echo "⚠️ No logs found"
+          echo "Listing logs directory:"
+          ls -R logs || echo "⚠️ No logs created!"
 
       - name: Upload Modbus log artifacts
         if: always()

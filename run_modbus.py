@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-✅ FINAL WORKING VERSION
-Starts a Modbus TCP Server (pymodbus 3.x) in a background process
-and a Client that connects, reads/writes, and logs results.
+✅ FINAL FIXED VERSION
+Modbus Server + Client automation for pymodbus >= 3.6
+Runs the TCP server in a background process, then connects a client, reads/writes data, and logs output.
+Tested in GitHub Actions Ubuntu runner with pymodbus==3.6.8.
 """
 
 import os
@@ -18,14 +19,14 @@ from pymodbus.datastore import (
 )
 from pymodbus.client import ModbusTcpClient
 
-# --- Create timestamped log folder ---
+# === Setup log directory ===
 timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 log_dir = os.path.join("logs", timestamp)
 os.makedirs(log_dir, exist_ok=True)
 
 
 def run_server():
-    """Blocking Modbus server running in its own process."""
+    """Blocking Modbus server process"""
     store = ModbusSlaveContext(
         di=ModbusSequentialDataBlock(0, [0] * 10),
         co=ModbusSequentialDataBlock(0, [1] * 10),
@@ -34,12 +35,14 @@ def run_server():
         zero_mode=True,
     )
     context = ModbusServerContext(slaves=store, single=True)
+
     print("🚀 Starting Modbus TCP server on 127.0.0.1:5020 ...", flush=True)
-    StartTcpServer(context, address=("127.0.0.1", 5020))
+    # ✅ pymodbus 3.6.8 expects keyword arguments only
+    StartTcpServer(context=context, address=("127.0.0.1", 5020))
 
 
-def wait_for_port(host, port, timeout=10):
-    """Wait until a TCP port starts accepting connections."""
+def wait_for_port(host: str, port: int, timeout: int = 10) -> bool:
+    """Wait until a TCP port starts accepting connections"""
     start = time.time()
     while time.time() - start < timeout:
         try:
@@ -51,9 +54,9 @@ def wait_for_port(host, port, timeout=10):
 
 
 def run_client():
-    """Run Modbus client, connect to server, and log results."""
-    client_log = os.path.join(log_dir, "client_output.txt")
-    with open(client_log, "w") as log:
+    """Run Modbus client, perform reads/writes, and save logs"""
+    client_log_path = os.path.join(log_dir, "client_output.txt")
+    with open(client_log_path, "w") as log:
         client = ModbusTcpClient("127.0.0.1", port=5020)
         if not client.connect():
             print("❌ Could not connect to server.", file=log)
@@ -72,14 +75,14 @@ def run_client():
         client.write_coil(0, False)
         client.write_coil(1, True)
 
-        # --- Holding Registers ---
+        # --- Read Holding Registers ---
         hr = client.read_holding_registers(0, 10)
         if not hr.isError():
             print(f"📗 Holding Registers: {hr.registers}", file=log)
         else:
             print(f"❌ HR read failed: {hr}", file=log)
 
-        # --- Input Registers ---
+        # --- Read Input Registers ---
         ir = client.read_input_registers(0, 10)
         if not ir.isError():
             print(f"📙 Input Registers: {ir.registers}", file=log)

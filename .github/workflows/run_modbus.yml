@@ -1,35 +1,32 @@
-name: Run Modbus Automation
+name: Run Modbus Automation (Baseline Test)
 
 on:
-  schedule:
-    - cron: "0 * * * *"  # every hour
-  workflow_dispatch:
+  workflow_dispatch:      # Manual trigger only for now
 
 jobs:
-  run-modbus:
+  test-run:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout latest code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Run Modbus orchestrator (server → client → stop)
+      - name: Run log creation test
         run: python run_modbus.py
 
-      - name: Verify logs exist
+      - name: Debug list directory
         run: |
-          echo "Checking logs directory..."
-          ls -R logs || echo "⚠️ No logs directory found!"
+          echo "=== Listing repo root ==="
+          pwd
+          ls -R
+          echo "========================"
 
-      - name: Upload Modbus log artifacts
+      - name: Upload log artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:

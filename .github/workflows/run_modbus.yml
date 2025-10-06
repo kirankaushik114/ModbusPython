@@ -2,8 +2,8 @@ name: Run Modbus Automation
 
 on:
   schedule:
-    - cron: "0 * * * *"  # every hour on the hour
-  workflow_dispatch:      # allows you to run it manually from the Actions tab
+    - cron: "0 * * * *"  # Runs every hour
+  workflow_dispatch:      # Allows manual run
 
 jobs:
   run-modbus:
@@ -22,16 +22,16 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Run orchestrator (server → client → stop)
+      - name: Run Modbus orchestrator (server → client → stop)
         run: |
           python run_modbus.py
 
-      - name: Upload logs
+      - name: Save logs as artifact
         if: always()
         run: |
           mkdir -p logs
-          echo "Workflow completed at $(date)" > logs/run_summary.txt
-        # Save logs as downloadable artifact
+          echo "Modbus workflow completed at $(date)" > logs/run_summary.txt
+        # Upload logs as downloadable artifact
       - name: Upload log artifact
         if: always()
         uses: actions/upload-artifact@v4

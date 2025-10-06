@@ -2,39 +2,47 @@ import subprocess
 import time
 import os
 
-# Optional: create a logs directory
+# Create logs directory
 os.makedirs("logs", exist_ok=True)
 
 print("🚀 Starting Modbus automation workflow")
 
-# Step 1: Start Modbus server
+# --- 1️⃣ Start Modbus server and log output ---
 print("Starting Modbus server...")
-server_process = subprocess.Popen(["python", "modbus_server.py"])
+server_log = open("logs/server_output.txt", "w")
+server_process = subprocess.Popen(
+    ["python", "modbus_server.py"],
+    stdout=server_log,
+    stderr=subprocess.STDOUT
+)
 
-# Step 2: Give the server a few seconds to start
+# Give the server a few seconds to start
 time.sleep(5)
 
-# Step 3: Run Modbus client
+# --- 2️⃣ Run Modbus client and capture logs ---
 print("Running Modbus client...")
-client_result = subprocess.run(["python", "modbus_client_read_coils.py"], capture_output=True, text=True)
+client_log = open("logs/client_output.txt", "w")
+client_result = subprocess.run(
+    ["python", "modbus_client_read_coils.py"],
+    stdout=client_log,
+    stderr=subprocess.STDOUT
+)
+client_log.close()
 
-# Save client output to a log file
-with open("logs/client_output.txt", "w") as f:
-    f.write(client_result.stdout)
-    f.write(client_result.stderr)
-
-# Step 4: Stop the server
+# --- 3️⃣ Stop Modbus server ---
 print("Stopping Modbus server...")
 if server_process.poll() is None:
     server_process.terminate()
     try:
         server_process.wait(timeout=5)
     except subprocess.TimeoutExpired:
-        print("Server did not stop gracefully — killing it...")
+        print("Server did not stop gracefully, killing it...")
         server_process.kill()
+server_log.close()
 
-# Step 5: Write summary log
+# --- 4️⃣ Write a summary log ---
 with open("logs/run_summary.txt", "w") as f:
-    f.write("✅ Modbus workflow completed at: " + time.ctime() + "\n")
+    f.write("✅ Modbus workflow completed successfully.\n")
+    f.write("Timestamp: " + time.ctime() + "\n")
 
-print("✅ Modbus operation completed successfully.")
+print("✅ Logs saved to ./logs/")

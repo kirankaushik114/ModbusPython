@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.13.7 on win32)" generated="20251006 16:01:39.328" rpa="false" schemaversion="4">
+<suite id="s1" name="Modbus Automation" source="C:\Users\KIRAN\PycharmProjects\ModbusPython\tests\modbus_automation.robot">
+<kw name="Log To Console" library="BuiltIn" type="SETUP">
+<arg>Starting Modbus Automation Suite...</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20251006 16:01:39.369" endtime="20251006 16:01:39.369"/>
+</kw>
+<test id="s1-t1" name="Start Modbus Server" line="14">
+<kw name="Create Directory" library="OperatingSystem">
+<arg>${LOG_DIR}</arg>
+<doc>Creates the specified directory.</doc>
+<msg timestamp="20251006 16:01:39.370" level="INFO" html="true">Directory '&lt;a href="file://C:\Users\KIRAN\PycharmProjects\ModbusPython\logs"&gt;C:\Users\KIRAN\PycharmProjects\ModbusPython\logs&lt;/a&gt;' already exists.</msg>
+<status status="PASS" starttime="20251006 16:01:39.370" endtime="20251006 16:01:39.370"/>
+</kw>
+<kw name="Run Process" library="Process">
+<arg>python</arg>
+<arg>${SERVER_SCRIPT}</arg>
+<arg>stdout=${LOG_DIR}/server_output.log</arg>
+<arg>stderr=${LOG_DIR}/server_error.log</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20251006 16:01:39.371" level="INFO">Starting process:
+python modbus_server.py</msg>
+<msg timestamp="20251006 16:01:39.378" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20251006 16:01:39.595" level="INFO">Process completed.</msg>
+<status status="PASS" starttime="20251006 16:01:39.371" endtime="20251006 16:01:39.595"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="FAIL" starttime="20251006 16:01:39.595" endtime="20251006 16:01:43.025"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Modbus server started successfully.</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20251006 16:01:43.026" endtime="20251006 16:01:43.026"/>
+</kw>
+<doc>Starts the Modbus server process.</doc>
+<status status="FAIL" starttime="20251006 16:01:39.370" endtime="20251006 16:01:43.027">Execution terminated by signal</status>
+</test>
+<test id="s1-t2" name="Run Modbus Client" line="21">
+<doc>Runs the Modbus client to read coils.</doc>
+<tag>robot:exit</tag>
+<status status="FAIL" starttime="20251006 16:01:43.031" endtime="20251006 16:01:43.032">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t3" name="Run Modbus Orchestrator" line="26">
+<doc>Runs the orchestrator script (run_modbus.py).</doc>
+<tag>robot:exit</tag>
+<status status="FAIL" starttime="20251006 16:01:43.036" endtime="20251006 16:01:43.038">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t4" name="Verify Logs Exist" line="31">
+<doc>Ensures all log files exist after execution.</doc>
+<tag>robot:exit</tag>
+<status status="FAIL" starttime="20251006 16:01:43.040" endtime="20251006 16:01:43.042">Test execution stopped due to a fatal error.</status>
+</test>
+<kw name="Log To Console" library="BuiltIn" type="TEARDOWN">
+<arg>Modbus Automation Suite Completed!</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20251006 16:01:43.045" endtime="20251006 16:01:43.046"/>
+</kw>
+<doc>Modbus Automation Suite using Robot Framework</doc>
+<status status="FAIL" starttime="20251006 16:01:39.330" endtime="20251006 16:01:43.046"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="4" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0" info="combined" combined="NOT robot:exit">NOT robot:exit</stat>
+</tag>
+<suite>
+<stat pass="0" fail="4" skip="0" id="s1" name="Modbus Automation">Modbus Automation</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

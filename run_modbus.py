@@ -2,7 +2,7 @@ import subprocess
 import time
 import os
 
-# Create logs directory
+# Create a folder for logs
 os.makedirs("logs", exist_ok=True)
 
 print("🚀 Starting Modbus automation workflow")
@@ -16,7 +16,7 @@ server_process = subprocess.Popen(
     stderr=subprocess.STDOUT
 )
 
-# Give the server a few seconds to start
+# Give the server time to start
 time.sleep(5)
 
 # --- 2️⃣ Run Modbus client and capture logs ---
@@ -40,7 +40,7 @@ if server_process.poll() is None:
         server_process.kill()
 server_log.close()
 
-# --- 4️⃣ Write a summary log ---
+# --- 4️⃣ Write summary log ---
 with open("logs/run_summary.txt", "w") as f:
     f.write("✅ Modbus workflow completed successfully.\n")
     f.write("Timestamp: " + time.ctime() + "\n")

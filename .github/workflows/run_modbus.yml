@@ -2,8 +2,8 @@ name: Run Modbus Automation (Robot Framework)
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 * * * *"   # Every hour
+  #schedule:
+  #  - cron: "0 * * * *"   # Every hour
 
 permissions:
   contents: write

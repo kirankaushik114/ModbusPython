@@ -1,0 +1,12 @@
+Connection to (127.0.0.1, 5020) failed: [WinError 10061] No connection could be made because the target machine actively refused it
+Traceback (most recent call last):
+  File "C:\Users\KIRAN\PycharmProjects\ModbusPython\modbus_client_read_coils.py", line 63, in <module>
+    run_modbus_client()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\KIRAN\PycharmProjects\ModbusPython\modbus_client_read_coils.py", line 17, in run_modbus_client
+    print("\u274c Could not connect to Modbus server.")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u274c' in position 0: character maps to <undefined>

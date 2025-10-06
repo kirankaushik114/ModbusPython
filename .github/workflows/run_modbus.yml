@@ -5,6 +5,11 @@ on:
   schedule:
     - cron: "0 * * * *"   # Every hour
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   run-modbus-robot:
     runs-on: ubuntu-latest
@@ -18,30 +23,42 @@ jobs:
         with:
           python-version: "3.10"
 
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install robotframework
+
+      - name: Generate timestamped folder name
+        id: time
+        run: echo "FOLDER_NAME=$(date +'%Y-%m-%d-%Hh')" >> $GITHUB_ENV
 
       - name: Run Robot Framework tests
         run: |
-          mkdir -p logs
-          robot -d logs tests/modbus_automation.robot
+          mkdir -p logs/${{ env.FOLDER_NAME }}
+          robot -d logs/${{ env.FOLDER_NAME }} tests/modbus_automation.robot
 
-      - name: List generated Robot Framework reports
-        run: |
-          echo "Generated files:"
-          ls -lh logs/
-
-      - name: Upload Robot Framework HTML reports
+      - name: Upload Robot logs (Artifacts)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: modbus-robot-html-reports
-          path: logs/
+          name: robot-reports-${{ env.FOLDER_NAME }}
+          path: logs/${{ env.FOLDER_NAME }}/
 
-
-
+      - name: Deploy HTML Reports to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: logs
+          publish_branch: gh-pages
+          commit_message: "Auto publish Robot Framework HTML reports for ${{ env.FOLDER_NAME }}"
 
 
 

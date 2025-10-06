@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-✅ Modbus TCP Client (Final Version)
+✅ Modbus TCP Client
 Reads and writes all Modbus data types from the local server.
-Works with Python 3.13 + pymodbus 3.6.8
 """
 
 from pymodbus.client import ModbusTcpClient
@@ -73,4 +72,4 @@ if client.connect():
     client.close()
     print("\n🔌 Disconnected from Modbus server.")
 else:
-    print(f"❌ Could not connect to {HOST}:{PORT}")
+    print(f"❌ Co

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-✅ Async Modbus TCP Server (Fixed for pymodbus 3.6.8)
+✅ Async Modbus TCP Server (for pymodbus >= 3.6)
 Simulates 10 values per data type, supports Unit IDs 0 and 1
 """
 
@@ -33,8 +33,8 @@ async def run_server():
     context = ModbusServerContext(slaves={0: slave_data, 1: slave_data}, single=False)
 
     identity = ModbusDeviceIdentification()
-    identity.VendorName = "LocalTest"
-    identity.ProductCode = "LT"
+    identity.VendorName = "GitHub"
+    identity.ProductCode = "GH"
     identity.ProductName = "Async Modbus TCP Server"
     identity.MajorMinorRevision = "3.6.8"
 

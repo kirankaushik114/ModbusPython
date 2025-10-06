@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.10.18 on linux)" generated="2025-10-06T10:39:37.905738" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.10.18 on linux)" generated="2025-10-06T10:39:58.739076" rpa="false" schemaversion="5">
 <suite id="s1" name="Modbus Automation" source="/home/runner/work/ModbusPython/ModbusPython/tests/modbus_automation.robot">
 <kw name="Log To Console" owner="BuiltIn" type="SETUP">
 <arg>Starting Modbus Automation Suite...</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" start="2025-10-06T10:39:37.937155" elapsed="0.000192"/>
+<status status="PASS" start="2025-10-06T10:39:58.770986" elapsed="0.000213"/>
 </kw>
 <test id="s1-t1" name="Start Modbus Server" line="15">
 <kw name="Create Directory" owner="OperatingSystem">
-<msg time="2025-10-06T10:39:37.938122" level="INFO" html="true">Directory '&lt;a href="file:///home/runner/work/ModbusPython/ModbusPython/logs"&gt;/home/runner/work/ModbusPython/ModbusPython/logs&lt;/a&gt;' already exists.</msg>
+<msg time="2025-10-06T10:39:58.771967" level="INFO" html="true">Directory '&lt;a href="file:///home/runner/work/ModbusPython/ModbusPython/logs"&gt;/home/runner/work/ModbusPython/ModbusPython/logs&lt;/a&gt;' already exists.</msg>
 <arg>${LOG_DIR}</arg>
 <doc>Creates the specified directory.</doc>
-<status status="PASS" start="2025-10-06T10:39:37.937942" elapsed="0.000239"/>
+<status status="PASS" start="2025-10-06T10:39:58.771768" elapsed="0.000260"/>
 </kw>
 <kw name="Start Process" owner="Process">
-<msg time="2025-10-06T10:39:37.938781" level="INFO">Starting process:
+<msg time="2025-10-06T10:39:58.772619" level="INFO">Starting process:
 python modbus_server.py</msg>
 <arg>python</arg>
 <arg>${SERVER_SCRIPT}</arg>
@@ -23,122 +23,122 @@ python modbus_server.py</msg>
 <arg>shell=True</arg>
 <arg>alias=modbus_server</arg>
 <doc>Starts a new process on background.</doc>
-<status status="PASS" start="2025-10-06T10:39:37.938289" elapsed="0.001057"/>
+<status status="PASS" start="2025-10-06T10:39:58.772145" elapsed="0.001010"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2025-10-06T10:39:42.939899" level="INFO">Slept 5 seconds.</msg>
+<msg time="2025-10-06T10:40:03.773592" level="INFO">Slept 5 seconds.</msg>
 <arg>5s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2025-10-06T10:39:37.939542" elapsed="5.000497"/>
+<status status="PASS" start="2025-10-06T10:39:58.773285" elapsed="5.000451"/>
 </kw>
 <kw name="Log To Console" owner="BuiltIn">
 <arg>Modbus server started successfully.</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" start="2025-10-06T10:39:42.940246" elapsed="0.000219"/>
+<status status="PASS" start="2025-10-06T10:40:03.774029" elapsed="0.000290"/>
 </kw>
 <doc>Starts the Modbus server process in the background.</doc>
-<status status="PASS" start="2025-10-06T10:39:37.937511" elapsed="5.003167"/>
+<status status="PASS" start="2025-10-06T10:39:58.771334" elapsed="5.003262"/>
 </test>
 <test id="s1-t2" name="Run Modbus Client" line="22">
 <kw name="Run Process" owner="Process">
-<msg time="2025-10-06T10:39:42.941925" level="INFO">Starting process:
+<msg time="2025-10-06T10:40:03.776469" level="INFO">Starting process:
 python modbus_client_read_coils.py</msg>
-<msg time="2025-10-06T10:39:42.942419" level="INFO">Waiting for process to complete.</msg>
-<msg time="2025-10-06T10:39:43.042729" level="INFO">Process completed.</msg>
+<msg time="2025-10-06T10:40:03.777063" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-10-06T10:40:03.877349" level="INFO">Process completed.</msg>
 <arg>python</arg>
 <arg>${CLIENT_SCRIPT}</arg>
 <arg>stdout=${LOG_DIR}/client_output.log</arg>
 <arg>stderr=${LOG_DIR}/client_error.log</arg>
 <arg>shell=True</arg>
 <doc>Runs a process and waits for it to complete.</doc>
-<status status="PASS" start="2025-10-06T10:39:42.941356" elapsed="0.101545"/>
+<status status="PASS" start="2025-10-06T10:40:03.775613" elapsed="0.101872"/>
 </kw>
 <kw name="Log To Console" owner="BuiltIn">
 <arg>Modbus client executed successfully.</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.043122" elapsed="0.000263"/>
+<status status="PASS" start="2025-10-06T10:40:03.877717" elapsed="0.000268"/>
 </kw>
 <doc>Runs the Modbus client to read coils.</doc>
-<status status="PASS" start="2025-10-06T10:39:42.940988" elapsed="0.102609"/>
+<status status="PASS" start="2025-10-06T10:40:03.775027" elapsed="0.103157"/>
 </test>
 <test id="s1-t3" name="Run Modbus Orchestrator" line="27">
 <kw name="Run Process" owner="Process">
-<msg time="2025-10-06T10:39:43.045279" level="INFO">Starting process:
+<msg time="2025-10-06T10:40:03.879362" level="INFO">Starting process:
 python run_modbus.py</msg>
-<msg time="2025-10-06T10:39:43.045694" level="INFO">Waiting for process to complete.</msg>
-<msg time="2025-10-06T10:39:43.246013" level="INFO">Process completed.</msg>
+<msg time="2025-10-06T10:40:03.879776" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-10-06T10:40:04.080090" level="INFO">Process completed.</msg>
 <arg>python</arg>
 <arg>${ORCHESTRATOR}</arg>
 <arg>stdout=${LOG_DIR}/orchestrator_output.log</arg>
 <arg>stderr=${LOG_DIR}/orchestrator_error.log</arg>
 <arg>shell=True</arg>
 <doc>Runs a process and waits for it to complete.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.044600" elapsed="0.201555"/>
+<status status="PASS" start="2025-10-06T10:40:03.878854" elapsed="0.201377"/>
 </kw>
 <kw name="Log To Console" owner="BuiltIn">
 <arg>Orchestrator executed successfully.</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.246373" elapsed="0.000214"/>
+<status status="PASS" start="2025-10-06T10:40:04.080449" elapsed="0.000216"/>
 </kw>
 <doc>Runs the Modbus orchestrator script.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.043971" elapsed="0.202817"/>
+<status status="PASS" start="2025-10-06T10:40:03.878473" elapsed="0.202371"/>
 </test>
 <test id="s1-t4" name="Verify Logs Exist" line="32">
 <kw name="Directory Should Exist" owner="OperatingSystem">
-<msg time="2025-10-06T10:39:43.247681" level="INFO" html="true">Directory '&lt;a href="file:///home/runner/work/ModbusPython/ModbusPython/logs"&gt;/home/runner/work/ModbusPython/ModbusPython/logs&lt;/a&gt;' exists.</msg>
+<msg time="2025-10-06T10:40:04.081683" level="INFO" html="true">Directory '&lt;a href="file:///home/runner/work/ModbusPython/ModbusPython/logs"&gt;/home/runner/work/ModbusPython/ModbusPython/logs&lt;/a&gt;' exists.</msg>
 <arg>${LOG_DIR}</arg>
 <doc>Fails unless the given path points to an existing directory.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.247466" elapsed="0.000272"/>
+<status status="PASS" start="2025-10-06T10:40:04.081480" elapsed="0.000259"/>
 </kw>
 <kw name="File Should Exist" owner="OperatingSystem">
-<msg time="2025-10-06T10:39:43.248051" level="INFO" html="true">File '&lt;a href="file:///home/runner/work/ModbusPython/ModbusPython/logs/server_output.log"&gt;/home/runner/work/ModbusPython/ModbusPython/logs/server_output.log&lt;/a&gt;' exists.</msg>
+<msg time="2025-10-06T10:40:04.082068" level="INFO" html="true">File '&lt;a href="file:///home/runner/work/ModbusPython/ModbusPython/logs/server_output.log"&gt;/home/runner/work/ModbusPython/ModbusPython/logs/server_output.log&lt;/a&gt;' exists.</msg>
 <arg>${LOG_DIR}/server_output.log</arg>
 <doc>Fails unless the given ``path`` points to an existing file.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.247872" elapsed="0.000232"/>
+<status status="PASS" start="2025-10-06T10:40:04.081844" elapsed="0.000278"/>
 </kw>
 <kw name="File Should Exist" owner="OperatingSystem">
-<msg time="2025-10-06T10:39:43.248370" level="INFO" html="true">File '&lt;a href="file:///home/runner/work/ModbusPython/ModbusPython/logs/client_output.log"&gt;/home/runner/work/ModbusPython/ModbusPython/logs/client_output.log&lt;/a&gt;' exists.</msg>
+<msg time="2025-10-06T10:40:04.082387" level="INFO" html="true">File '&lt;a href="file:///home/runner/work/ModbusPython/ModbusPython/logs/client_output.log"&gt;/home/runner/work/ModbusPython/ModbusPython/logs/client_output.log&lt;/a&gt;' exists.</msg>
 <arg>${LOG_DIR}/client_output.log</arg>
 <doc>Fails unless the given ``path`` points to an existing file.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.248204" elapsed="0.000218"/>
+<status status="PASS" start="2025-10-06T10:40:04.082220" elapsed="0.000218"/>
 </kw>
 <kw name="File Should Exist" owner="OperatingSystem">
-<msg time="2025-10-06T10:39:43.248685" level="INFO" html="true">File '&lt;a href="file:///home/runner/work/ModbusPython/ModbusPython/logs/orchestrator_output.log"&gt;/home/runner/work/ModbusPython/ModbusPython/logs/orchestrator_output.log&lt;/a&gt;' exists.</msg>
+<msg time="2025-10-06T10:40:04.082694" level="INFO" html="true">File '&lt;a href="file:///home/runner/work/ModbusPython/ModbusPython/logs/orchestrator_output.log"&gt;/home/runner/work/ModbusPython/ModbusPython/logs/orchestrator_output.log&lt;/a&gt;' exists.</msg>
 <arg>${LOG_DIR}/orchestrator_output.log</arg>
 <doc>Fails unless the given ``path`` points to an existing file.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.248520" elapsed="0.000215"/>
+<status status="PASS" start="2025-10-06T10:40:04.082531" elapsed="0.000214"/>
 </kw>
 <kw name="Log To Console" owner="BuiltIn">
 <arg>All expected logs verified successfully.</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.248866" elapsed="0.000143"/>
+<status status="PASS" start="2025-10-06T10:40:04.082848" elapsed="0.000169"/>
 </kw>
 <doc>Ensures that all log files exist after execution.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.247066" elapsed="0.002095"/>
+<status status="PASS" start="2025-10-06T10:40:04.081096" elapsed="0.002042"/>
 </test>
 <test id="s1-t5" name="Stop Modbus Server" line="40">
 <kw name="Terminate Process" owner="Process">
-<msg time="2025-10-06T10:39:43.249919" level="INFO">Gracefully terminating process.</msg>
-<msg time="2025-10-06T10:39:43.350258" level="INFO">Process completed.</msg>
+<msg time="2025-10-06T10:40:04.083807" level="INFO">Gracefully terminating process.</msg>
+<msg time="2025-10-06T10:40:04.184067" level="INFO">Process completed.</msg>
 <arg>modbus_server</arg>
 <doc>Stops the process gracefully or forcefully.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.249737" elapsed="0.100651"/>
+<status status="PASS" start="2025-10-06T10:40:04.083660" elapsed="0.100552"/>
 </kw>
 <kw name="Log To Console" owner="BuiltIn">
 <arg>Modbus server stopped successfully.</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.350596" elapsed="0.000307"/>
+<status status="PASS" start="2025-10-06T10:40:04.184427" elapsed="0.000242"/>
 </kw>
 <doc>Stops the background Modbus server process.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.249398" elapsed="0.101709"/>
+<status status="PASS" start="2025-10-06T10:40:04.083329" elapsed="0.101559"/>
 </test>
 <kw name="Log To Console" owner="BuiltIn" type="TEARDOWN">
 <arg>Modbus Automation Suite Completed!</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" start="2025-10-06T10:39:43.351761" elapsed="0.000179"/>
+<status status="PASS" start="2025-10-06T10:40:04.185545" elapsed="0.000164"/>
 </kw>
 <doc>Modbus Automation Suite using Robot Framework</doc>
-<status status="PASS" start="2025-10-06T10:39:37.906689" elapsed="5.445312"/>
+<status status="PASS" start="2025-10-06T10:39:58.740183" elapsed="5.445589"/>
 </suite>
 <statistics>
 <total>
